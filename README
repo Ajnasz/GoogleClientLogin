@@ -1,0 +1,11 @@
+How to use:
+
+var clientLogin = import('googleclientlogin');
+var googleAuth = clientLogin.GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword'});
+googleAuth.on('login', function(){
+  // do things with google services
+});
+googleAuth.on('loginFailed', function(){
+  // damn..
+});
+googleAuth.login();
