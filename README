@@ -16,24 +16,45 @@ http://code.google.com/apis/gdata/faq.html#clientlogin
 list of services:
 
 
-Name                                name in googleclientlogin module     value
-Google Analytics Data APIs:         analytics:                           'analytics'
-Google Apps APIs:                   apps:                                'apps'
-(Domain Information & Management):  base:                                'gbase'
-Google Base Data API:               sites:                               'jotspot'
-Google Sites Data API:              blogger:                             'blogger'
-Blogger Data API:                   book:                                'print'
-Book Search Data API:               calendar:                            'cl'
-Calendar Data API:                  codesearch:                          'codesearch'
-Google Code Search Data API:        contacts:                            'cp'
-Contacts Data API:                  docs:                                'writely'
-Documents List Data API:            finance:                             'finance'
-Finance Data API:                   mail:                                'mail'
-Gmail Atom feed:                    health:                              'health'
-Health Data API:                    weaver:                              'weaver'
-Maps Data APIs:                     maps:                                'local'
-Picasa Web Albums Data API:         picasaweb:                           'lh2'
-Sidewiki Data API:                  sidewiki:                            'annotateweb'
-Spreadsheets Data API:              spreadsheets:                        'wise'
-Webmaster Tools API:                webmastertools:                      'sitemaps'
-YouTube Data API:                   youtube:                             'youtube'
+Name                                                 |name in googleclientlogin module     |value
+-----------------------------------------------------|-------------------------------------|---------------
+Google Analytics Data APIs:                          |analytics:                           |'analytics'
+-----------------------------------------------------|-------------------------------------|---------------
+Google Apps APIs (Domain Information & Management):  |apps:                                |'apps'
+-----------------------------------------------------|-------------------------------------|---------------
+Google Base Data API:                                |base:                                |'gbase'
+-----------------------------------------------------|-------------------------------------|---------------
+Google Sites Data API:                               |sites:                               |'jotspot'
+-----------------------------------------------------|-------------------------------------|---------------
+Blogger Data API:                                    |blogger:                             |'blogger'
+-----------------------------------------------------|-------------------------------------|---------------
+Book Search Data API:                                |book:                                |'print'
+-----------------------------------------------------|-------------------------------------|---------------
+Calendar Data API:                                   |calendar:                            |'cl'
+-----------------------------------------------------|-------------------------------------|---------------
+Google Code Search Data API:                         |codesearch:                          |'codesearch'
+-----------------------------------------------------|-------------------------------------|---------------
+Contacts Data API:                                   |contacts:                            |'cp'
+-----------------------------------------------------|-------------------------------------|---------------
+Documents List Data API:                             |docs:                                |'writely'
+-----------------------------------------------------|-------------------------------------|---------------
+Finance Data API:                                    |finance:                             |'finance'
+-----------------------------------------------------|-------------------------------------|---------------
+Gmail Atom feed:                                     |mail:                                |'mail'
+-----------------------------------------------------|-------------------------------------|---------------
+Health Data API:                                     |health:                              |'health'
+-----------------------------------------------------|-------------------------------------|---------------
+Health Data API H9 Sandbox                           |weaver:                              |'weaver'
+-----------------------------------------------------|-------------------------------------|---------------
+Maps Data APIs:                                      |maps:                                |'local'
+-----------------------------------------------------|-------------------------------------|---------------
+Picasa Web Albums Data API:                          |picasaweb:                           |'lh2'
+-----------------------------------------------------|-------------------------------------|---------------
+Sidewiki Data API:                                   |sidewiki:                            |'annotateweb'
+-----------------------------------------------------|-------------------------------------|---------------
+Spreadsheets Data API:                               |spreadsheets:                        |'wise'
+-----------------------------------------------------|-------------------------------------|---------------
+Webmaster Tools API:                                 |webmastertools:                      |'sitemaps'
+-----------------------------------------------------|-------------------------------------|---------------
+YouTube Data API:                                    |youtube:                             |'youtube'
+-----------------------------------------------------|-------------------------------------|---------------
