@@ -1,5 +1,7 @@
+/*global require: true*/
 var https = require('https'),
-    events = require('events');
+    EventEmitter = require('events').EventEmitter,
+    util = require('util');
 
 const userAgent  = 'GCLNodejs';
 const version    = 0.1;
@@ -32,7 +34,8 @@ var GoogleClientLogin = function(conf) {
     console.error('an error occured in clientlogin');
   });
 };
-GoogleClientLogin.prototype = new events.EventEmitter();
+GoogleClientLogin.prototype = {};
+util.inherits(GoogleClientLogin, EventEmitter);
 /**
   * Logs in the user
   * @method login
