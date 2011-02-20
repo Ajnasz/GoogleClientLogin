@@ -8,6 +8,31 @@ const version    = 0.1;
 const loginURL   = '/accounts/ClientLogin';
 const googleHost = 'www.google.com';
 
+// http://code.google.com/apis/gdata/faq.html#clientlogin
+const services = {
+  analytics: 'analytics',
+  apps: 'apps',
+  base: 'gbase',
+  sites: 'jotspot',
+  blogger: 'blogger',
+  book: 'print',
+  calendar: 'cl',
+  codesearch: 'codesearch',
+  contacts: 'cp',
+  docs: 'writely',
+  finance: 'finance',
+  mail: 'mail',
+  health: 'health',
+  weaver: 'weaver',
+  maps: 'local',
+  picasaweb: 'lh2',
+  sidewiki: 'annotateweb',
+  spreadsheets: 'wise',
+  webmastertools :'sitemaps',
+  youtube: 'youtube'
+};
+
+
 /**
   * Helps to log in to any google service with the clientlogin method
   * Google returns 3 values when login was success:
@@ -46,7 +71,7 @@ GoogleClientLogin.prototype.login = function() {
   var content = 'accountType=HOSTED_OR_GOOGLE'
               + '&Email=' + this.conf.email
               + '&Passwd=' + this.conf.password
-              + '&service=cp'
+              + '&service=' + services[this.conf.service]
               + '&source=' + userAgent + '_' + version;
 
 
