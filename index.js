@@ -28,9 +28,8 @@ var GoogleClientLogin = function(conf) {
   // stores the authentication data
   this.auths = {};
   this.client = require('https');
-  console.log('new client login');
   this.on('error', function () {
-    console.log('an error occured in clientlogin');
+    console.error('an error occured in clientlogin');
   });
 };
 GoogleClientLogin.prototype = new events.EventEmitter();
@@ -61,7 +60,6 @@ GoogleClientLogin.prototype.login = function() {
     },
     function(response) {
       var resp = '';
-
       response.on('data', function(chunk) {
           resp += chunk;
       });
@@ -86,7 +84,7 @@ GoogleClientLogin.prototype.login = function() {
           * Fires when login was not success
           * @event loginFailed
           */
-          console.log('client login failed', resp);
+          console.error('client login failed', resp);
           clientLogin.emit('loginFailed');
         }
       });
