@@ -26,6 +26,7 @@ const services = {
   weaver: 'weaver',
   maps: 'local',
   picasaweb: 'lh2',
+  reader: 'reader',
   sidewiki: 'annotateweb',
   spreadsheets: 'wise',
   webmastertools :'sitemaps',
