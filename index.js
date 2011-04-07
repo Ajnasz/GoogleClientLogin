@@ -1,6 +1,5 @@
 /*global require: true*/
-var https = require('https'),
-    EventEmitter = require('events').EventEmitter,
+var EventEmitter = require('events').EventEmitter,
     util = require('util');
 
 const userAgent  = 'GCLNodejs';
