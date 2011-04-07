@@ -29,8 +29,9 @@ const services = {
   reader: 'reader',
   sidewiki: 'annotateweb',
   spreadsheets: 'wise',
-  webmastertools :'sitemaps',
-  youtube: 'youtube'
+  webmastertools: 'sitemaps',
+  youtube: 'youtube',
+  c2dm: 'ac2dm'
 };
 
 
