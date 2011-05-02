@@ -88,9 +88,9 @@ GoogleClientLogin.prototype.login = function() {
       }
     },
     function(response) {
-      var resp = '';
+      var data = '';
       response.on('data', function(chunk) {
-          resp += chunk;
+          data += chunk;
       });
       response.on('error', function (e) {
         console.log('error on request: ', e);
@@ -99,7 +99,7 @@ GoogleClientLogin.prototype.login = function() {
       response.on('end', function() {
         var statusCode = response.statusCode;
         if(statusCode >= 200 && statusCode < 300) {
-          (resp).split('\n').forEach(function(dataStr) {
+          (data).split('\n').forEach(function(dataStr) {
             var data = dataStr.split('=');
             clientLogin.auths[data[0]] = data[1];
           });
@@ -113,8 +113,7 @@ GoogleClientLogin.prototype.login = function() {
           * Fires when login was not success
           * @event loginFailed
           */
-          console.error('client login failed', resp);
-          clientLogin.emit('loginFailed');
+          clientLogin.emit('error', response, data);
         }
       });
     }
