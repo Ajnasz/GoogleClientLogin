@@ -1,0 +1,12 @@
+{
+  "name": "googleclientlogin",
+  "description": "Log in to Google services using CllientLogin method",
+  "url": "https://github.com/Ajnasz/GoogleClientLogin",
+  "keywords": ["google", "service", "authentication", "api", "clientlogin"],
+  "author": {
+    "name": "Lajos Koszti",
+    "email": "ajnasz@ajnasz.hu",
+    "url": "http://ajnasz.hu"
+  },
+  "version": "0.1.2"
+}
