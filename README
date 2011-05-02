@@ -1,16 +1,18 @@
-Requires 0.4.1
-How to use:
+Google's ClientLogin authentication implementation for Node.js
 
-var clientLogin = import('googleclientlogin');
-var googleAuth = clientLogin.GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword', service: 'contacts'});
-googleAuth.on('login', function(){
-  // do things with google services
-});
-googleAuth.on('loginFailed', function(){
-  // damn..
-});
-googleAuth.login();
+Requires at least noejs 0.4.1
 
+Events:
+  login: emitted when login was success
+  error: emitted when an error occured. Has two parameters, the response object and the received data
+
+Methods:
+  getAuthId
+  getSID
+  getLSID
+
+
+After the login was success, you should use the AuthId in each of your requests, see example below
 
 http://code.google.com/apis/gdata/faq.html#clientlogin
 list of services:
@@ -60,5 +62,28 @@ Webmaster Tools API:                                 |webmastertools:           
 -----------------------------------------------------|-------------------------------------|---------------
 YouTube Data API:                                    |youtube:                             |'youtube'
 -----------------------------------------------------|-------------------------------------|---------------
+
 C2DM Push Notification Service:                      |c2dm:                                |'ac2dm'
------------------------------------------------------|-------------------------------------|---------------
+
+
+How to use:
+
+var clientLogin = import('googleclientlogin');
+var googleAuth = clientLogin.GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword', service: 'contacts'});
+googleAuth.on('login', function(){
+  // do things with google services
+  require('https').request({
+    host: 'www.google.com',
+    port: 443,
+    path: path,
+    method: 'GET',
+    headers: {
+      'Authorization': 'GoogleLogin auth=' + googleAuth.getAuthId(),
+      ...
+    }
+  }, function(){...});
+});
+googleAuth.on('loginFailed', function(){
+  // damn..
+});
+googleAuth.login();
