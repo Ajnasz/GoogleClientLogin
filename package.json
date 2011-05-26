@@ -3,6 +3,16 @@
   "description": "Log in to Google services using CllientLogin method",
   "url": "https://github.com/Ajnasz/GoogleClientLogin",
   "keywords": ["google", "service", "authentication", "api", "clientlogin"],
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/Ajnasz/GoogleClientLogin.git"
+  },
+  "bugs": {
+    "web": "https://github.com/Ajnasz/GoogleClientLogin/issues"
+  },
+  "engines": {
+    "node": ">=0.4.1"
+  },
   "author": {
     "name": "Lajos Koszti",
     "email": "ajnasz@ajnasz.hu",
