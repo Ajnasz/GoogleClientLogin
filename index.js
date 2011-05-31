@@ -30,7 +30,8 @@ const services = {
   spreadsheets: 'wise',
   webmastertools: 'sitemaps',
   youtube: 'youtube',
-  c2dm: 'ac2dm'
+  c2dm: 'ac2dm',
+  voice: 'grandcentral'
 };
 
 
