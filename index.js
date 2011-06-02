@@ -56,7 +56,7 @@ var GoogleClientLogin = function(conf) {
   this.conf = conf || {};
   // stores the authentication data
   this.auths = {};
-  this.client = require('https');
+  this.loginProcessing = false;
   this.on('error', function () {
     console.error('an error occured in clientlogin');
   });
@@ -68,59 +68,63 @@ util.inherits(GoogleClientLogin, EventEmitter);
   * @method login
   */
 GoogleClientLogin.prototype.login = function() {
-  var clientLogin = this;
+  // don't try to log in, if one is already in progress
+  if (!this.loginProcessing) {
+    var clientLogin = this;
 
-  var content = 'accountType=HOSTED_OR_GOOGLE'
-              + '&Email=' + this.conf.email
-              + '&Passwd=' + this.conf.password
-              + '&service=' + services[this.conf.service]
-              + '&source=' + userAgent + '_' + version;
+    var content = 'accountType=HOSTED_OR_GOOGLE'
+                + '&Email=' + this.conf.email
+                + '&Passwd=' + this.conf.password
+                + '&service=' + services[this.conf.service]
+                + '&source=' + userAgent + '_' + version;
 
-
-  var request = this.client.request(
-    {
-      host: 'www.google.com',
-      port: 443,
-      path: loginURL,
-      method: 'POST',
-      headers: {
-        'Content-Length': content.length,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    },
-    function(response) {
-      var data = '';
-      response.on('data', function(chunk) {
-          data += chunk;
-      });
-      response.on('error', function (e) {
-        console.log('error on request: ', e);
-      });
-
-      response.on('end', function() {
-        var statusCode = response.statusCode;
-        if(statusCode >= 200 && statusCode < 300) {
-          (data).split('\n').forEach(function(dataStr) {
-            var data = dataStr.split('=');
-            clientLogin.auths[data[0]] = data[1];
-          });
-          /**
-          * Fires when login was success
-          * @event login
-          */
-          clientLogin.emit('login');
-        } else {
-          /**
-          * Fires when login was not success
-          * @event loginFailed
-          */
-          clientLogin.emit('error', response, data);
+    this.loginProcessing = true;
+    var request = require('https').request(
+      {
+        host: 'www.google.com',
+        port: 443,
+        path: loginURL,
+        method: 'POST',
+        headers: {
+          'Content-Length': content.length,
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
-      });
-    }
-  );
-  request.write(content);
-  request.end();
+      },
+      function(response) {
+        var data = '';
+        response.on('data', function(chunk) {
+            data += chunk;
+        });
+        response.on('error', function (e) {
+          console.log('error on request: ', e);
+        });
+
+        response.on('end', function() {
+          this.loginProcessing = false;
+          var statusCode = response.statusCode;
+          if(statusCode >= 200 && statusCode < 300) {
+            (data).split('\n').forEach(function(dataStr) {
+              var data = dataStr.split('=');
+              clientLogin.auths[data[0]] = data[1];
+            });
+            /**
+            * Fires when login was success
+            * @event login
+            */
+            clientLogin.emit('login');
+          } else {
+            /**
+            * Fires when login was not success
+            * @event loginFailed
+            */
+            clientLogin.emit('error', response, data);
+          }
+        });
+      }
+    );
+    request.write(content);
+    request.end();
+  }
 };
 /**
   * Returns the value of the Auth property
