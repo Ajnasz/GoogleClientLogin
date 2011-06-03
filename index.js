@@ -4,7 +4,7 @@ var EventEmitter = require('events').EventEmitter,
     util = require('util');
 
 const userAgent = 'GCLNodejs';
-const ver = '0.1.4';
+const ver = '0.1.5';
 const loginURL = '/accounts/ClientLogin';
 const googleHost = 'www.google.com';
 
