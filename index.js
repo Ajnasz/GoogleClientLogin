@@ -1,13 +1,34 @@
 /*jslint indent: 2*/
 /*global require: true*/
+/**
+ * For more details about the ClientLogin authentication check out this:
+ * http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html
+ */
 var EventEmitter = require('events').EventEmitter,
     util = require('util');
 
+// useragent string
 const userAgent = 'GCLNodejs';
+// version string
 const ver = '0.1.5';
+
 const loginURL = '/accounts/ClientLogin';
 const googleHost = 'www.google.com';
+const captchaRequiredError = 'CaptchaRequired';
 
+// error messages
+const errors = {
+  captchaMissing: 'User entered captcha is missing',
+  tokenMissing: 'Login token is missing',
+  loginFailed: 'Login failed'
+};
+
+// Google account types 
+const accountTypes = {
+  google: 'GOOGLE', // get authorization for a Google account only
+  hosted: 'HOSTED', // get authorization for a hosted account only
+  hostedOrGoogle: 'HOSTED_OR_GOOGLE' // get authorization first for a hosted account; if attempt fails, get authorization for a Google account
+};
 // http://code.google.com/apis/gdata/faq.html#clientlogin
 const services = {
   analytics: 'analytics',
@@ -62,13 +83,25 @@ var GoogleClientLogin = function (conf) {
 GoogleClientLogin.prototype = {};
 util.inherits(GoogleClientLogin, EventEmitter);
 
+/**
+ * Splits response data into key-value pairs,
+ * Only for internal usage
+ * @method _parseData
+ */
 GoogleClientLogin.prototype._parseData = function (data) {
+  this.auths = {};
   data.split('\n').forEach(function (dataStr) {
     var data = dataStr.split('=');
     this.auths[data[0]] = data[1];
   }.bind(this));
 };
 
+/**
+ * Parses the response of the login
+ * emits error and login event
+ * @method _parseLoginResponse
+ * @param {http.ClientResponse} response The response object
+ */
 GoogleClientLogin.prototype._parseLoginResponse = function (response) {
 
   var data = '';
@@ -84,8 +117,8 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
   response.on('end', function () {
     this.loginProcessing = false;
     var statusCode = response.statusCode, error;
+    this._parseData(data);
     if (statusCode >= 200 && statusCode < 300) {
-      this._parseData(data);
       /**
        * Fires when login was success
        * @event login
@@ -93,10 +126,10 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
       this.emit('login');
     } else {
       /**
-       * Fires when login was not success
+       * Fires when login failed
        * @event loginFailed
        */
-      error = new Error('Login failed: ' + statusCode);
+      error = new Error(errors.loginFailed);
       error.data = data;
       error.response = response;
       this.emit('error', error);
@@ -104,67 +137,168 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
   }.bind(this));
 };
 
-GoogleClientLogin.prototype._getRequestContent = function () {
-  return require('querystring').stringify({
-    accountType: 'HOSTED_OR_GOOGLE',
+/**
+ * Method to find out which account type should we use, default is HOSTED_OR_GOOGLE
+ * Only for internal usage
+ * @method _getAccountType
+ * @returns string
+ */
+GoogleClientLogin.prototype._getAccountType = function (params) {
+  var output = accountTypes.hostedOrGoogle;
+
+  if (typeof params === 'object' && params.accountType === 'string' &&
+    typeof accountTypes[params.accountType] === 'string') {
+      output = accountTypes[params.accountType];
+  } else if (typeof this.conf.accountType === 'string') {
+      output = accountTypes[this.conf.accountType];
+  }
+
+  return output;
+};
+
+/**
+ * Method to create the content of the login request
+ * Only for internal usage
+ * @method _getRequestContent
+ * @param {Object} params (Optional) You can pass the logincaptcha and
+ * logintoken and the accountType as properties
+ * @returns string
+ */
+GoogleClientLogin.prototype._getRequestContent = function (params) {
+  var output, hasCaptcha, hasToken, error;
+
+  output = {
+    accountType: this._getAccountType(params),
     Email: this.conf.email,
     Passwd: this.conf.password,
     service: services[this.conf.service],
     source: userAgent + '_' + ver
-  });
-}
+  };
+
+  if (typeof params === 'object') {
+
+    hasCaptcha = typeof params.logincaptcha === 'string';
+    hasToken = typeof params.logintoken === 'string';
+
+    if (hasCaptcha && hasToken) {
+      output.logincaptcha = params.logincaptcha;
+      output.logintoken = params.logintoken;
+    // if the captcha or the token is given the other also required
+    } else if (!hasCaptcha && hasToken) {
+      error = errors.captchaMissing;
+    } else if (!hasToken && hasCaptcha) {
+      error = errors.tokenMissing;
+    }
+  }
+
+  if (error) {
+    this.emit('error', new Error(error));
+    output = false;
+  } else {
+    output = require('querystring').stringify(output);
+  }
+
+  return output;
+};
 
 /**
  * Logs in the user
  * @method login
+ * @param {Object} params (optional) You can pass the logincaptcha and
+ * logintoken and the accountType as properties
  */
-GoogleClientLogin.prototype.login = function () {
+GoogleClientLogin.prototype.login = function (params) {
   // don't try to log in, if one is already in progress
   if (!this.loginProcessing) {
     this.loginProcessing = true;
 
     var content, request;
-    content = this._getRequestContent();
-    request = require('https').request(
-      {
-        host: 'www.google.com',
-        port: 443,
-        path: loginURL,
-        method: 'POST',
-        headers: {
-          'Content-Length': content.length,
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      },
-      this._parseLoginResponse.bind(this)
-    );
-    request.write(content);
-    request.end();
+
+    content = this._getRequestContent(params);
+
+    if (content !== false) {
+      request = require('https').request(
+        {
+          host: 'www.google.com',
+          port: 443,
+          path: loginURL,
+          method: 'POST',
+          headers: {
+            'Content-Length': content.length,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        },
+        this._parseLoginResponse.bind(this)
+      );
+      request.write(content);
+      request.end();
+    }
   }
 };
 
 /**
- * Returns the value of the Auth property
+ * Method to get the AuthId property
  * @method getAuthId
+ * @returns the AuthId or undefined
  */
 GoogleClientLogin.prototype.getAuthId = function () {
   return this.auths.Auth;
 };
 
 /**
- * Returns the value of the SID property
+ * Method to ge the SID property
  * @method getSID
+ * @returns the value of the SID property or undefined
  */
 GoogleClientLogin.prototype.getSID = function () {
   return this.auths.SID;
 };
 
 /**
-  * Returns the value of the LSID property
-  * @method getSID
-  */
+ * Method to get the LSID property
+ * @method getLSID
+ * @returns the value of the LSID property or undefined
+ */
 GoogleClientLogin.prototype.getLSID = function () {
   return this.auths.LSID;
 };
+
+/**
+ * Method to get the error code
+ * @method getError
+ * @returns the error code or undefined
+ */
+GoogleClientLogin.prototype.getError = function () {
+  return this.auths.Error;
+};
+
+/**
+ * Method to know if captcha is required
+ * @method isCaptchaRequired
+ * @returns boolean
+ */
+GoogleClientLogin.prototype.isCaptchaRequired = function () {
+  return this.getError() === captchaRequiredError;
+};
+
+/**
+ * Method to get the captcha url
+ * @method getCaptchaUrl
+ * @returns the value of the CaptchaUrl property or undefined
+ */
+GoogleClientLogin.prototype.getCaptchaUrl = function () {
+  return this.auths.CaptchaUrl;
+};
+
+/**
+  * Returns the value of the CaptchaToken property
+  * @method getCaptchaToken
+ * @returns string or undefined
+  */
+GoogleClientLogin.prototype.getCaptchaToken = function () {
+  return this.auths.CaptchaToken;
+};
+
+GoogleClientLogin.errors = errors;
 
 exports.GoogleClientLogin = GoogleClientLogin;
