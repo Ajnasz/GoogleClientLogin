@@ -8,6 +8,8 @@ Properties:
 Events:
   login: emitted when login was success
   error: emitted when an error occured. Has two parameters, the response object and the received data
+  You can access to their names via constants: GoogleClientLogin.events.login or GoogleClientLogin.events.error
+  or you can use 'login' and 'error' as string.
 
 Methods:
   login
@@ -27,9 +29,6 @@ Methods:
   getLSID
     Returns the value of LSID key from the response.
 
-  getError
-    If the login was not success, google will send back an error code what you can get with this method
-
   isCaptchaRequired
     If the login was not success and the user need to pass a captcha challenge this method will return true
 
@@ -38,6 +37,9 @@ Methods:
 
   getCaptchaToken
     You will need to pass it back to the google with the user's answer to the captcha if the login failed and captcha authentication required.
+
+  getError
+    If the login was not success, google will send back an error code what you can get with this method
 
 
 After the login was success, you should use the AuthId in each of your requests, see example below
@@ -99,7 +101,7 @@ How to use:
 
 var clientLogin = import('googleclientlogin');
 var googleAuth = clientLogin.GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword', service: 'contacts'});
-googleAuth.on('login', function(){
+googleAuth.on(GoogleClientLogin.events.login, function(){
   // do things with google services
   require('https').request({
     host: 'www.google.com',
@@ -112,7 +114,7 @@ googleAuth.on('login', function(){
     }
   });
 });
-googleAuth.on('error', function(e) {
+googleAuth.on(GoogleClientLogin.events.login.error, function(e) {
     switch(e.message) {
       case GoogleClientLogin.errors.loginFailed:
         if (this.isCaptchaRequired()) {

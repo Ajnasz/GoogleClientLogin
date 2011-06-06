@@ -11,10 +11,10 @@ var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
     password: pw(),
     service: 'contacts'
   });
-  googleAuth.on('login', function () {
+  googleAuth.on(GoogleClientLogin.events.login, function () {
     console.log('login success');
   });
-  googleAuth.on('error', function (e) {
+  googleAuth.on(GoogleClientLogin.events.error, function (e) {
     assert.equal(e.message, GoogleClientLogin.errors.tokenMissing);
     console.log('test 2 finished', JSON.stringify(this.auths), this.isCaptchaRequired());
     // damn..
@@ -30,10 +30,10 @@ var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
     password: pw(),
     service: 'contacts'
   });
-  googleAuth.on('login', function () {
+  googleAuth.on(GoogleClientLogin.events.login, function () {
     console.log('login success');
   });
-  googleAuth.on('error', function (e) {
+  googleAuth.on(GoogleClientLogin.events.error, function (e) {
     assert.equal(e.message, GoogleClientLogin.errors.captchaMissing);
     console.log('test 2 finished', JSON.stringify(this.auths), this.isCaptchaRequired());
     // damn..
@@ -50,10 +50,10 @@ var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
     password: pw(),
     service: 'contacts'
   });
-  googleAuth.on('login', function () {
+  googleAuth.on(GoogleClientLogin.events.login, function () {
     console.log('login success');
   });
-  googleAuth.on('error', function (e) {
+  googleAuth.on(GoogleClientLogin.events.error, function (e) {
     console.log('test 2 finished', JSON.stringify(e.response.headers),
       JSON.stringify(this.auths), this.isCaptchaRequired());
     // damn..

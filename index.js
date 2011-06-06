@@ -23,6 +23,11 @@ const errors = {
   loginFailed: 'Login failed'
 };
 
+const events = {
+  login: 'login',
+  error: 'error'
+};
+
 // Google account types 
 const accountTypes = {
   google: 'GOOGLE', // get authorization for a Google account only
@@ -111,7 +116,7 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
   }.bind(this));
 
   response.on('error', function (e) {
-    this.emit('error', e);
+    this.emit(events.error, e);
   }.bind(this));
 
   response.on('end', function () {
@@ -123,7 +128,7 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
        * Fires when login was success
        * @event login
        */
-      this.emit('login');
+      this.emit(events.login);
     } else {
       /**
        * Fires when login failed
@@ -132,7 +137,7 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
       error = new Error(errors.loginFailed);
       error.data = data;
       error.response = response;
-      this.emit('error', error);
+      this.emit(events.error, error);
     }
   }.bind(this));
 };
@@ -192,7 +197,7 @@ GoogleClientLogin.prototype._getRequestContent = function (params) {
   }
 
   if (error) {
-    this.emit('error', new Error(error));
+    this.emit(events.error, new Error(error));
     output = false;
   } else {
     output = require('querystring').stringify(output);
@@ -300,5 +305,6 @@ GoogleClientLogin.prototype.getCaptchaToken = function () {
 };
 
 GoogleClientLogin.errors = errors;
+GoogleClientLogin.events = events;
 
 exports.GoogleClientLogin = GoogleClientLogin;
