@@ -12,10 +12,10 @@ userini.on('fileParse', function () {
     service: 'contacts'
   });
   googleAuth.on('login', function () {
-    console.log('login success');
     assert.equal(this.getSID().length, 267, 'Something wrong with the SID length');
     assert.equal(this.getLSID().length, 267, 'Something wrong with the LSID length');
     assert.equal(this.getAuthId().length, 246, 'Something wrong with the AuthId length');
+    console.log('test 1 finished');
     // do things with google services
   });
   googleAuth.on('error', function (e) {
@@ -36,7 +36,9 @@ googleAuth.on('login', function () {
   console.log('login success');
 });
 googleAuth.on('error', function (e) {
-  console.log(e.message);
+  assert.equal(e.message, GoogleClientLogin.errors.loginFailed);
+  assert.equal(this.getError(), 'BadAuthentication', 'Wrong error returned');
+  console.log('test 2 finished');
   // damn..
 });
 googleAuth.login();
