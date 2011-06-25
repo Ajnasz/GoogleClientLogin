@@ -100,7 +100,7 @@ Google Voice API (unoffical):                        |voice:                    
 How to use:
 
 var GoogleClientLogin = import('googleclientlogin').GoogleClientLogin;
-var googleAuth = GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword', service: 'contacts'});
+var googleAuth = new GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword', service: 'contacts'});
 googleAuth.on(GoogleClientLogin.events.login, function(){
   // do things with google services
   require('https').request({
