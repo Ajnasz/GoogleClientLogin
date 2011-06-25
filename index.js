@@ -306,5 +306,6 @@ GoogleClientLogin.prototype.getCaptchaToken = function () {
 
 GoogleClientLogin.errors = errors;
 GoogleClientLogin.events = events;
+GoogleClientLogin.accountTypes = accountTypes;
 
 exports.GoogleClientLogin = GoogleClientLogin;
