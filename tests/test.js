@@ -9,12 +9,13 @@ userini.on('fileParse', function () {
   googleAuth = new GoogleClientLogin({
     email: account.email,
     password: account.password,
-    service: 'contacts'
+    service: 'contacts',
+    accountType: account.type
   });
   googleAuth.on(GoogleClientLogin.events.login, function () {
     assert.equal(this.getSID().length, 267, 'Something wrong with the SID length');
     assert.equal(this.getLSID().length, 267, 'Something wrong with the LSID length');
-    assert.equal(this.getAuthId().length, 246, 'Something wrong with the AuthId length');
+    assert.equal(this.getAuthId().length, 267, 'Something wrong with the AuthId length');
     console.log('test 1 finished');
     // do things with google services
   });
@@ -30,7 +31,8 @@ userini.load();
 var googleAuth = new GoogleClientLogin({
   email: 'ajnasz@gmail.com',
   password: 'foobar',
-  service: 'contacts'
+  service: 'contacts',
+  accountType: 'google'
 });
 googleAuth.on(GoogleClientLogin.events.login, function () {
   console.log('login success');

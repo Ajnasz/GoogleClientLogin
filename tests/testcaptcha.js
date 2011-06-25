@@ -9,7 +9,8 @@ var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
   var googleAuth = new GoogleClientLogin({
     email: 'ajnasz@gmail.com',
     password: pw(),
-    service: 'contacts'
+    service: 'contacts',
+    accountType: 'google'
   });
   googleAuth.on(GoogleClientLogin.events.login, function () {
     console.log('login success');
@@ -28,7 +29,8 @@ var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
   var googleAuth = new GoogleClientLogin({
     email: 'ajnasz@gmail.com',
     password: pw(),
-    service: 'contacts'
+    service: 'contacts',
+    accountType: 'google'
   });
   googleAuth.on(GoogleClientLogin.events.login, function () {
     console.log('login success');
@@ -48,7 +50,8 @@ var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
   var googleAuth = new GoogleClientLogin({
     email: 'ajnasz@gmail.com',
     password: pw(),
-    service: 'contacts'
+    service: 'contacts',
+    accountType: 'google'
   });
   googleAuth.on(GoogleClientLogin.events.login, function () {
     console.log('login success');
