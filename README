@@ -4,6 +4,9 @@ Requires at least nodejs 0.4.1
 
 Properties:
   errors: That is an object, filled with the possible error messages.
+  accountTypes: An object, where you can set the type of account to request authorization for.
+    properties are: google, hosted, hostedOrGoogle
+    default is hostedOrGoogle
 
 Events:
   login: emitted when login was success
@@ -100,7 +103,12 @@ Google Voice API (unoffical):                        |voice:                    
 How to use:
 
 var GoogleClientLogin = import('googleclientlogin').GoogleClientLogin;
-var googleAuth = new GoogleClientLogin({email: 'yourmail@gmail.com', password: 'yourpassword', service: 'contacts'});
+var googleAuth = new GoogleClientLogin({
+  email: 'yourmail@gmail.com',
+  password: 'yourpassword',
+  service: 'contacts',
+  accountType: GoogleClientLogin.accountTypes.google
+});
 googleAuth.on(GoogleClientLogin.events.login, function(){
   // do things with google services
   require('https').request({

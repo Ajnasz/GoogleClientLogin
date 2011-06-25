@@ -32,7 +32,7 @@ var googleAuth = new GoogleClientLogin({
   email: 'ajnasz@gmail.com',
   password: 'foobar',
   service: 'contacts',
-  accountType: 'google'
+  accountType: GoogleClientLogin.accountTypes.google
 });
 googleAuth.on(GoogleClientLogin.events.login, function () {
   console.log('login success');
