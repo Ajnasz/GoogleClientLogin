@@ -10,7 +10,7 @@ var EventEmitter = require('events').EventEmitter,
 // useragent string
 const userAgent = 'GCLNodejs';
 // version string
-const ver = '0.2.1';
+const ver = '0.2.2';
 
 const loginURL = '/accounts/ClientLogin';
 const googleHost = 'www.google.com';
