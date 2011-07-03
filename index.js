@@ -58,7 +58,8 @@ const services = {
   webmastertools: 'sitemaps',
   youtube: 'youtube',
   c2dm: 'ac2dm',
-  voice: 'grandcentral'
+  voice: 'grandcentral',
+  fusiontables: 'fusiontables'
 };
 
 
