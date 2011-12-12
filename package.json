@@ -8,7 +8,7 @@
     "url" : "git://github.com/Ajnasz/GoogleClientLogin.git"
   },
   "bugs": {
-    "web": "https://github.com/Ajnasz/GoogleClientLogin/issues"
+    "url": "https://github.com/Ajnasz/GoogleClientLogin/issues"
   },
   "engines": {
     "node": ">=0.4.1"
