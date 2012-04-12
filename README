@@ -53,6 +53,8 @@ list of services:
 
 Name                                                 |name in googleclientlogin module     |value
 -----------------------------------------------------|-------------------------------------|---------------
+Google Adwords APIs:                                 |adwords:                             |'adwords'
+-----------------------------------------------------|-------------------------------------|---------------
 Google Analytics Data APIs:                          |analytics:                           |'analytics'
 -----------------------------------------------------|-------------------------------------|---------------
 Google Apps APIs (Domain Information & Management):  |apps:                                |'apps'
