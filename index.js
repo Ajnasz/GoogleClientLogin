@@ -36,6 +36,7 @@ const accountTypes = {
 };
 // http://code.google.com/apis/gdata/faq.html#clientlogin
 const services = {
+  adwords: 'adwords',
   analytics: 'analytics',
   apps: 'apps',
   base: 'gbase',
