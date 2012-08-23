@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/Ajnasz/GoogleClientLogin.png)](http://travis-ci.org/Ajnasz/GoogleClientLogin)
 Google's ClientLogin authentication implementation for Node.js
 
 Requires at least nodejs 0.4.1
