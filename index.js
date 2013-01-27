@@ -1,6 +1,6 @@
 /*jslint indent: 2*/
 /*global require: true*/
-/**
+/*
  * For more details about the ClientLogin authentication check out this:
  * http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html
  */
@@ -78,7 +78,9 @@ const services = {
  *
  * @class GoogleClientLogin
  * @constructor
- * @param Object conf An object, with two properties: email and password
+ * @param {Object} conf An object, with two properties: email and password
+ *     @param {String} conf.email
+ *     @param {String} conf.password
  */
 var GoogleClientLogin = function (conf) {
   this.conf = conf || {};
@@ -151,7 +153,9 @@ GoogleClientLogin.prototype._parseLoginResponse = function (response) {
  * Method to find out which account type should we use, default is HOSTED_OR_GOOGLE
  * Only for internal usage
  * @method _getAccountType
- * @returns string
+ * @param {Object} [params]
+ *   @param {String} [params.accountType]
+ * @return {String}
  */
 GoogleClientLogin.prototype._getAccountType = function (params) {
   var output = accountTypes.hostedOrGoogle;
@@ -172,7 +176,7 @@ GoogleClientLogin.prototype._getAccountType = function (params) {
  * @method _getRequestContent
  * @param {Object} params (Optional) You can pass the logincaptcha and
  * logintoken and the accountType as properties
- * @returns string
+ * @return string
  */
 GoogleClientLogin.prototype._getRequestContent = function (params) {
   var output, hasCaptcha, hasToken, error;
@@ -249,7 +253,7 @@ GoogleClientLogin.prototype.login = function (params) {
 /**
  * Method to get the AuthId property
  * @method getAuthId
- * @returns the AuthId or undefined
+ * @return {String || undefined} the AuthId or undefined
  */
 GoogleClientLogin.prototype.getAuthId = function () {
   return this.auths.Auth;
@@ -258,7 +262,7 @@ GoogleClientLogin.prototype.getAuthId = function () {
 /**
  * Method to ge the SID property
  * @method getSID
- * @returns the value of the SID property or undefined
+ * @return {String || undefined} the value of the SID property or undefined
  */
 GoogleClientLogin.prototype.getSID = function () {
   return this.auths.SID;
@@ -267,7 +271,7 @@ GoogleClientLogin.prototype.getSID = function () {
 /**
  * Method to get the LSID property
  * @method getLSID
- * @returns the value of the LSID property or undefined
+ * @return {String || undefined} the value of the LSID property or undefined
  */
 GoogleClientLogin.prototype.getLSID = function () {
   return this.auths.LSID;
@@ -276,7 +280,7 @@ GoogleClientLogin.prototype.getLSID = function () {
 /**
  * Method to get the error code
  * @method getError
- * @returns the error code or undefined
+ * @return {Number || undefined} the error code or undefined
  */
 GoogleClientLogin.prototype.getError = function () {
   return this.auths.Error;
@@ -285,7 +289,7 @@ GoogleClientLogin.prototype.getError = function () {
 /**
  * Method to know if captcha is required
  * @method isCaptchaRequired
- * @returns boolean
+ * @return {Boolean}
  */
 GoogleClientLogin.prototype.isCaptchaRequired = function () {
   return this.getError() === captchaRequiredError;
@@ -294,7 +298,7 @@ GoogleClientLogin.prototype.isCaptchaRequired = function () {
 /**
  * Method to get the captcha url
  * @method getCaptchaUrl
- * @returns the value of the CaptchaUrl property or undefined
+ * @return {String || undefined} the value of the CaptchaUrl property or undefined
  */
 GoogleClientLogin.prototype.getCaptchaUrl = function () {
   return this.auths.CaptchaUrl;
@@ -303,7 +307,7 @@ GoogleClientLogin.prototype.getCaptchaUrl = function () {
 /**
   * Returns the value of the CaptchaToken property
   * @method getCaptchaToken
- * @returns string or undefined
+  * @return {String || undefined} string or undefined
   */
 GoogleClientLogin.prototype.getCaptchaToken = function () {
   return this.auths.CaptchaToken;
