@@ -87,7 +87,11 @@ var GoogleClientLogin = function (conf) {
   this.auths = {};
   this.loginProcessing = false;
 };
-GoogleClientLogin.prototype = {};
+
+GoogleClientLogin.prototype = {
+    constructor: GoogleClientLogin
+};
+
 util.inherits(GoogleClientLogin, EventEmitter);
 
 /**
