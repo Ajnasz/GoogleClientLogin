@@ -4,7 +4,7 @@ var assert = require('assert');
 var pw = function () {
   return 'foobar' + Date.now() + Math.random();
 };
-var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
+var GoogleClientLogin = require('../index').GoogleClientLogin;
 (function () {
   var googleAuth = new GoogleClientLogin({
     email: 'ajnasz@gmail.com',
