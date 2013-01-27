@@ -2,7 +2,7 @@
 /*jslint indent:2*/
 var assert = require('assert');
 var IniReader = require('inireader').IniReader;
-var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin;
+var GoogleClientLogin = require('../index').GoogleClientLogin;
 var userini = new IniReader('/home/ajnasz/.google.ini');
 userini.on('fileParse', function () {
   var account = this.param('account'), googleAuth;
@@ -13,9 +13,15 @@ userini.on('fileParse', function () {
     accountType: account.type
   });
   googleAuth.on(GoogleClientLogin.events.login, function () {
-    assert.equal(this.getSID().length, 267, 'Something wrong with the SID length');
-    assert.equal(this.getLSID().length, 267, 'Something wrong with the LSID length');
-    assert.equal(this.getAuthId().length, 267, 'Something wrong with the AuthId length');
+    var sid, lsid, authId;
+
+    sid = this.getSID();
+    lsid = this.getLSID();
+    authId = this.getAuthId();
+
+    assert.equal(sid.length, 288, 'Something wrong with the SID length: '  + sid.length);
+    assert.equal(lsid.length, 288, 'Something wrong with the LSID length: ' + lsid.length);
+    assert.equal(authId.length, 288, 'Something wrong with the AuthId length: ' + authId.length);
     console.log('test 1 finished');
     // do things with google services
   });
