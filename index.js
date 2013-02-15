@@ -60,7 +60,8 @@ const services = {
   youtube: 'youtube',
   c2dm: 'ac2dm',
   voice: 'grandcentral',
-  fusiontables: 'fusiontables'
+  fusiontables: 'fusiontables',
+  sj: 'sj' // undocumented features
 };
 
 
