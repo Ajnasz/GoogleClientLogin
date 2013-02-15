@@ -100,7 +100,8 @@ C2DM Push Notification Service:                      |c2dm:                     
 Google Reader Data API (unofficial):                 |reader:                              |'reader'
 -----------------------------------------------------|-------------------------------------|---------------
 Google Voice API (unoffical):                        |voice:                               |'grandcentral'
-
+-----------------------------------------------------|-------------------------------------|---------------
+Google Music API (unoffical):                        |js:                                  |'js'
 
 How to use:
 
