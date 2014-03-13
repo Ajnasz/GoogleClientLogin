@@ -248,6 +248,11 @@ GoogleClientLogin.prototype.login = function (params) {
       );
       request.write(content);
       request.end();
+      
+      //prevents crashing on failure to reach google server
+      request.on('error', function (err) {
+          this.emit(events.error, err);
+      }.bind(this));
     }
   }
 };
