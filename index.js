@@ -246,13 +246,14 @@ GoogleClientLogin.prototype.login = function (params) {
         },
         this._parseLoginResponse.bind(this)
       );
-      request.write(content);
-      request.end();
-      
+
       //prevents crashing on failure to reach google server
       request.on('error', function (err) {
-          this.emit(events.error, err);
+        this.emit(events.error, err);
       }.bind(this));
+
+      request.write(content);
+      request.end();
     }
   }
 };
