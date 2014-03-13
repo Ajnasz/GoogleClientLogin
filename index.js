@@ -1,4 +1,4 @@
-/*jslint indent: 2*/
+/*jslint indent: 2, esnext: true*/
 /*global require: true*/
 /*
  * For more details about the ClientLogin authentication check out this:
@@ -92,7 +92,7 @@ var GoogleClientLogin = function (conf) {
 };
 
 GoogleClientLogin.prototype = {
-    constructor: GoogleClientLogin
+  constructor: GoogleClientLogin
 };
 
 util.inherits(GoogleClientLogin, EventEmitter);
@@ -163,10 +163,10 @@ GoogleClientLogin.prototype._getAccountType = function (params) {
   var output = accountTypes.hostedOrGoogle;
 
   if (typeof params === 'object' && params.accountType === 'string' &&
-    typeof accountTypes[params.accountType] === 'string') {
-      output = accountTypes[params.accountType];
+        typeof accountTypes[params.accountType] === 'string') {
+    output = accountTypes[params.accountType];
   } else if (typeof this.conf.accountType === 'string') {
-      output = accountTypes[this.conf.accountType];
+    output = accountTypes[this.conf.accountType];
   }
 
   return output;
@@ -235,7 +235,7 @@ GoogleClientLogin.prototype.login = function (params) {
     if (content !== false) {
       request = require('https').request(
         {
-          host: 'www.google.com',
+          host: googleHost,
           port: 443,
           path: loginURL,
           method: 'POST',
