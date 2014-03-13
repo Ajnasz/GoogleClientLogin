@@ -56,8 +56,8 @@ _If the login was not success, google will send back an error code what you can 
 After the login was success, you should use the AuthId in each of your requests, see example below
 
 http://code.google.com/apis/gdata/faq.html#clientlogin
-list of services:
 
+### list of services:
 
 Name                                               |name in googleclientlogin module |value
 ---------------------------------------------------|---------------------------------|---------------
