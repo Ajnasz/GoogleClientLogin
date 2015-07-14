@@ -1,5 +1,9 @@
 ## Google's ClientLogin authentication implementation for Node.js
 
+### Google Client Login officially deprecated
+
+> ClientLogin has been officially deprecated since April 20, 2012 and is now no longer available. Requests to ClientLogin will fail with a HTTP 404 response. We encourage you to migrate to OAuth 2.0 as soon as possible.
+
 ### Requires at least nodejs 0.4.1
 
 #### Properties:
